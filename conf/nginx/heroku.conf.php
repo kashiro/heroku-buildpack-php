@@ -1,18 +1,10 @@
 #user  nobody;
-worker_processes  1;
-worker_rlimit_nofile 8192;
 
 error_log  stderr;
 #error_log  logs/error.log  notice;
 #error_log  logs/error.log  info;
 
 #pid        logs/nginx.pid;
-
-
-events {
-    worker_connections 8000;
-}
-
 
 http {
     server_tokens off;
@@ -51,7 +43,7 @@ http {
       image/x-icon
       text/css
       text/plain
-	  text/x-component;
+      text/x-component;
 
     fastcgi_buffers 256 4k;
 
