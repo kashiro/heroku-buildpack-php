@@ -1,6 +1,24 @@
+#user  nobody;
+worker_processes  1;
+worker_rlimit_nofile 8192;
+
+error_log  stderr;
+#error_log  logs/error.log  notice;
+#error_log  logs/error.log  info;
+
+#pid        logs/nginx.pid;
+
+
+events {
+    worker_connections 8000;
+}
+
+
 http {
+    server_tokens off;
     include       mime.types;
     default_type  application/octet-stream;
+    charset_types text/xml text/plain text/vnd.wap.wml application/x-javascript application/rss+xml text/css application/javascript application/json;
 
     #log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
     #                  '$status $body_bytes_sent "$http_referer" '
@@ -9,12 +27,31 @@ http {
     #access_log  logs/access.log  main;
 
     sendfile        on;
-    #tcp_nopush     on;
+    tcp_nopush     on;
 
-    #keepalive_timeout  0;
-    keepalive_timeout  65;
+    keepalive_timeout  20;
 
     gzip  on;
+    gzip_comp_level    5;
+    gzip_min_length    256;
+    gzip_proxied       any;
+    gzip_vary          on;
+    gzip_types
+      application/atom+xml
+      application/javascript
+      application/json
+      application/rss+xml
+      application/vnd.ms-fontobject
+      application/x-font-ttf
+      application/x-web-app-manifest+json
+      application/xhtml+xml
+      application/xml
+      font/opentype
+      image/svg+xml
+      image/x-icon
+      text/css
+      text/plain
+	  text/x-component;
 
     fastcgi_buffers 256 4k;
 
